@@ -8,10 +8,7 @@ class LinkedPair:
         self.next = None
 
 class HashTable:
-    '''
-    A hash table that with `capacity` buckets
-    that accepts string keys
-    '''
+    
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
         self.storage = [None] * capacity
@@ -33,29 +30,16 @@ class HashTable:
         OPTIONAL STRETCH: Research and implement DJB2
         '''
         pass
-
-
     def _hash_mod(self, key):
-        '''
-        Take an arbitrary key and return a valid integer index
-        within the storage capacity of the hash table.
-        '''
         return self._hash(key) % self.capacity
 
-
+    
     def insert(self, key, value):
-        '''
-        Store the value with the given key.
+        index = self._hash_mod(key)
+        lp = LinkedPair(key, value)
 
-        # Part 1: Hash collisions should be handled with an error warning. (Think about and
-        # investigate the impact this will have on the tests)
-
-        # Part 2: Change this so that hash collisions are handled with Linked List Chaining.
-
-        Fill this in.
-        '''
-        pass
-
+        lp.next = self.storage[index]
+        self.storage[index] = lp
 
 
     def remove(self, key):
@@ -66,8 +50,28 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        lp = self.storage[index]
+        if lp:
+            prev = None
 
+            while True:
+                if lp.key == key:
+                    if prev:
+                        prev.next = lp.next
+                        lp = None
+                        break
+                    elif self.storage[index].next:
+                        self.storage[index] = None
+                        break
+                    else:
+                        self.storage[index] = None
+                        break
+                else:
+                    if lp.next == None:
+                        break
+        else:
+            print("key not found!")  
 
     def retrieve(self, key):
         '''
