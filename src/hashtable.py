@@ -12,6 +12,7 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
         self.storage = [None] * capacity
+        
 
 
     def _hash(self, key):
@@ -76,12 +77,16 @@ class HashTable:
     def retrieve(self, key):
         index = self._hash_mod(key)
         lp = self.storage[index]
+
         if lp:
             while True:
                 if lp.key == key:
-                    return lp .value
+                    return lp.value
                 else:
-                    return None
+                    if lp.next:
+                        lp = lp.next
+                    else:
+                        return None
         else:
             return None
         
@@ -103,10 +108,9 @@ class HashTable:
             if i:
                 self.insert(i.key, i.value)
                 lp = i
-            while lp.next:
-                lp = lp.next
-                self.insert(lp.key, lp.value)
-
+                while lp.next:
+                    lp = lp.next
+                    self.insert(lp.key, lp.value)
 
 
 if __name__ == "__main__":
