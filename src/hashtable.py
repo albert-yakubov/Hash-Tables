@@ -94,7 +94,18 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        self.capacity *= 2
+        new_storage = [None] * self.capacity
+        old_storage = self.storage
+        self.storage = new_storage
+        
+        for i in old_storage:
+            if i:
+                self.insert(i.key, i.value)
+                lp = i
+            while lp.next:
+                lp = lp.next
+                self.insert(lp.key, lp.value)
 
 
 
