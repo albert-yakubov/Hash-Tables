@@ -74,14 +74,17 @@ class HashTable:
             print("key not found!")  
 
     def retrieve(self, key):
-        '''
-        Retrieve the value stored with the given key.
-
-        Returns None if the key is not found.
-
-        Fill this in.
-        '''
-        pass
+        index = self._hash_mod(key)
+        lp = self.storage[index]
+        if lp:
+            while True:
+                if lp.key == key:
+                    return lp .value
+                else:
+                    return None
+        else:
+            return None
+        
 
 
     def resize(self):
